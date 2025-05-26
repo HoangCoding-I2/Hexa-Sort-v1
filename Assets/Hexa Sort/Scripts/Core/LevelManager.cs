@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    public static LevelManager Instance;
+    public static LevelManager Instance { get; private set; }
     public static Action<int> OnLevelLoaded;
     public static Action OnLevelCompleted;
 

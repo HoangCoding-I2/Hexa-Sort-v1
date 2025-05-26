@@ -5,7 +5,7 @@ using UnityEngine;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManager Instance { get; private set; }
     
     private void Awake()
     {
@@ -69,21 +69,6 @@ public class GameManager : MonoBehaviour
         
         // Không còn cách nào để chơi tiếp
         return true;
-    }
-    
-    /// <summary>
-    /// Gọi khi hoàn thành level
-    /// </summary>
-    public void OnLevelComplete()
-    {
-        int currentLevel = LevelManager.Instance.GetCurrentLevelIndex() + 1;
-        int currentScore = ScoreManager.Instance.GetCurrentScore();
-        
-        // Sử dụng PopupManager trực tiếp
-        if (PopupManager.Instance != null)
-        {
-            PopupManager.Instance.ShowLevelComplete(currentLevel, currentScore);
-        }
     }
     
     /// <summary>

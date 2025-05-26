@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +22,6 @@ public class AudioService : MonoBehaviour
 
     // Audio Sources
     private AudioSource _musicSource;
-    private readonly Dictionary<string, AudioSource> _loopingSources = new Dictionary<string, AudioSource>();
     
     // Quản lý nhạc nền theo màn hình
     [SerializeField] private bool _autoPlayMusicOnSceneLoad = true;
@@ -176,18 +174,21 @@ public class AudioService : MonoBehaviour
     }
     
     /// <summary>
-    /// Phát âm thanh một lần
+    /// Phát âm thanh một lần (chỉ dành cho SFX, không dành cho nhạc nền)
     /// </summary>
-    public AudioSource PlaySound(SoundSO sound, Vector3? position = null)
+    public AudioSource PlaySound(SoundSO sound)
     {
         if (sound == null || sound.Clip == null)
             return null;
             
+        // Cảnh báo nếu cố gắng phát nhạc nền qua PlaySound
+        if (sound.Loop)
+        {
+            Debug.LogWarning($"Âm thanh '{sound.name}' có Loop=true. Hãy sử dụng PlayMusic() thay vì PlaySound() cho nhạc nền!");
+        }
+            
         GameObject soundObj = new GameObject($"Sound_{sound.name}");
         
-        if (position.HasValue)
-            soundObj.transform.position = position.Value;
-            
         AudioSource source = soundObj.AddComponent<AudioSource>();
         source.clip = sound.Clip;
         source.outputAudioMixerGroup = (sound.AudioType == SoundSO.AudioTypes.Music) ? _musicMixerGroup : _sfxMixerGroup;
@@ -195,60 +196,16 @@ public class AudioService : MonoBehaviour
         source.pitch = sound.RandomizePitch 
             ? UnityEngine.Random.Range(sound.Pitch - sound.PitchVariation, sound.Pitch + sound.PitchVariation)
             : sound.Pitch;
-        source.loop = sound.Loop;
-        source.spatialBlend = position.HasValue ? 1f : 0f;
+        source.loop = false; // Luôn false cho SFX
+        source.spatialBlend = 0f; // 2D sound
         source.Play();
         
-        if (!sound.Loop)
-        {
-            Destroy(soundObj, sound.Clip.length);
-        }
-        else
-        {
-            string id = Guid.NewGuid().ToString();
-            _loopingSources[id] = source;
-            
-            // Thêm component để xóa khỏi từ điển khi bị hủy
-            SoundCleanupHelper helper = soundObj.AddComponent<SoundCleanupHelper>();
-            helper.Initialize(id, RemoveLoopingSound);
-        }
+        // Tự động xóa GameObject sau khi âm thanh phát xong
+        Destroy(soundObj, sound.Clip.length);
         
         return source;
     }
-    
 
-    
-    /// <summary>
-    /// Xóa âm thanh lặp khỏi từ điển
-    /// </summary>
-    private void RemoveLoopingSound(string id)
-    {
-        if (_loopingSources.ContainsKey(id))
-        {
-            _loopingSources.Remove(id);
-        }
-    }
-    
-
-    
-    /// <summary>
-    /// Fade out nhạc nền
-    /// </summary>
-    private IEnumerator FadeOutMusic(float fadeTime)
-    {
-        float startVolume = _musicSource.volume;
-        
-        float timer = 0;
-        while (timer < fadeTime)
-        {
-            timer += Time.deltaTime;
-            _musicSource.volume = Mathf.Lerp(startVolume, 0, timer / fadeTime);
-            yield return null;
-        }
-        
-        _musicSource.Stop();
-        _musicSource.volume = startVolume;
-    }
 
     #endregion
 
@@ -365,24 +322,4 @@ public class AudioService : MonoBehaviour
     }
 
     #endregion
-}
-
-/// <summary>
-/// Helper class để hỗ trợ xóa âm thanh khỏi từ điển
-/// </summary>
-public class SoundCleanupHelper : MonoBehaviour
-{
-    private string _id;
-    private Action<string> _onDestroyed;
-
-    public void Initialize(string id, Action<string> callback)
-    {
-        _id = id;
-        _onDestroyed = callback;
-    }
-
-    private void OnDestroy()
-    {
-        _onDestroyed?.Invoke(_id);
-    }
 } 

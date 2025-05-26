@@ -8,7 +8,6 @@ public class LevelCompletePopup : BasePopup
     [SerializeField] private TextMeshProUGUI _levelText;
     [SerializeField] private TextMeshProUGUI _rewardAmountText;
     [SerializeField] private Button _nextButton;
-    [SerializeField] private Button _rewardX2Button;
     [SerializeField] private Image _imageColor; // Reference to Image_color
     
     private int _rewardAmount;
@@ -20,9 +19,6 @@ public class LevelCompletePopup : BasePopup
         
         if (_nextButton != null)
             _nextButton.onClick.AddListener(OnNextButtonClicked);
-            
-        if (_rewardX2Button != null)
-            _rewardX2Button.onClick.AddListener(OnRewardX2ButtonClicked);
     }
     
     public void Initialize(int level, int reward)
@@ -52,14 +48,6 @@ public class LevelCompletePopup : BasePopup
             LeanTween.scale(_nextButton.gameObject, Vector3.one, 0.5f)
                 .setEase(LeanTweenType.easeOutBack)
                 .setDelay(0.2f);
-        }
-        
-        if (_rewardX2Button != null)
-        {
-            _rewardX2Button.transform.localScale = Vector3.zero;
-            LeanTween.scale(_rewardX2Button.gameObject, Vector3.one, 0.5f)
-                .setEase(LeanTweenType.easeOutBack)
-                .setDelay(0.4f);
         }
         
         // Start continuous rotation for Image_color
@@ -94,22 +82,6 @@ public class LevelCompletePopup : BasePopup
         LevelManager.Instance.LoadNextLevel();
     }
     
-    private void OnRewardX2ButtonClicked()
-    {
-        // Phát âm thanh button click
-        if (AudioService.Instance != null)
-            AudioService.Instance.PlayButtonClick();
-            
-        // Xử lý nhân đôi phần thưởng (ví dụ xem quảng cáo)
-        _rewardAmount *= 2;
-        
-        if (_rewardAmountText != null)
-            _rewardAmountText.text = _rewardAmount.ToString();
-            
-        if (_rewardX2Button != null)
-            _rewardX2Button.gameObject.SetActive(false);
-    }
-    
     private void OnDestroy()
     {
         // Stop animation if it's still running
@@ -121,8 +93,5 @@ public class LevelCompletePopup : BasePopup
         
         if (_nextButton != null)
             _nextButton.onClick.RemoveListener(OnNextButtonClicked);
-            
-        if (_rewardX2Button != null)
-            _rewardX2Button.onClick.RemoveListener(OnRewardX2ButtonClicked);
     }
 }

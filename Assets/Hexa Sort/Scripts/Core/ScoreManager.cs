@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    public static ScoreManager Instance;
+    public static ScoreManager Instance { get; private set; }
     
     [Header("Settings")]
     [SerializeField] private int _baseScorePerLevel = 100; // Điểm cơ bản mỗi level

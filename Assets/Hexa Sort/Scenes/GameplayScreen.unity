@@ -1676,7 +1676,6 @@ MonoBehaviour:
   _baseScorePerLevel: 100
   _scorePerHexagon: 2
   _progressBar: {fileID: 1741867399}
-  _levelManager: {fileID: 208660013}
 --- !u!1 &741095869
 GameObject:
   m_ObjectHideFlags: 0
@@ -5470,18 +5469,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1740014f43d3e34ca9eb25614991846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _popupName: 
   _panelPopup: {fileID: 6324901274904252305}
   _showDuration: 0.3
   _hideDuration: 0.25
   _showEase: 27
   _hideEase: 26
-  _onShow:
-    m_PersistentCalls:
-      m_Calls: []
-  _onHide:
-    m_PersistentCalls:
-      m_Calls: []
   _levelText: {fileID: 3542200134935162945}
   _rewardAmountText: {fileID: 6206288551716637322}
   _nextButton: {fileID: 2302704898174133556}
@@ -7131,18 +7123,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8e234b586a27df479a4ed17794cdb15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _popupName: 
   _panelPopup: {fileID: 4877709444413611945}
   _showDuration: 0.3
   _hideDuration: 0.25
   _showEase: 27
   _hideEase: 26
-  _onShow:
-    m_PersistentCalls:
-      m_Calls: []
-  _onHide:
-    m_PersistentCalls:
-      m_Calls: []
   _levelText: {fileID: 797925889366167454}
   _redoButton: {fileID: 1838338943533757256}
   _homeButton: {fileID: 4903262699902656562}
@@ -9134,18 +9119,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e23f8cac5928f4844a78e774b8b1e50a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _popupName: 
   _panelPopup: {fileID: 7762344108172229456}
   _showDuration: 0.3
   _hideDuration: 0.25
   _showEase: 27
   _hideEase: 26
-  _onShow:
-    m_PersistentCalls:
-      m_Calls: []
-  _onHide:
-    m_PersistentCalls:
-      m_Calls: []
   _okButton: {fileID: 3226662364499950305}
   _sfxSlider: {fileID: 3737042907981747757}
   _musicSlider: {fileID: 1929368694571619374}
