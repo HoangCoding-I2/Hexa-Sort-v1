@@ -9,7 +9,6 @@ public class GridRotator : MonoBehaviour
     [SerializeField] private float _snapSpeed = 10f;
     [SerializeField] private float _snapThreshold = 0.1f;
     
-    private Vector2 _startPosition;
     private float _lastXPosition;
     private bool _isDragging = false;
     private Quaternion _targetRotation;
@@ -21,18 +20,6 @@ public class GridRotator : MonoBehaviour
         _targetRotation = transform.rotation;
         // Cache tất cả stacks thay vì tìm kiếm mỗi frame
         _allStacks.AddRange(FindObjectsOfType<HexStack>());
-        
-        // Đăng ký vào event khi có stack mới được tạo (nếu có)
-        // Bạn có thể thêm vào StackSpawner của mình:
-        // public static event Action<HexStack> OnStackCreated;
-        // StackSpawner.OnStackCreated += RegisterNewStack;
-    }
-    
-    // Đăng ký stack mới nếu được tạo trong runtime
-    private void RegisterNewStack(HexStack stack)
-    {
-        if (!_allStacks.Contains(stack))
-            _allStacks.Add(stack);
     }
     
     private void Update()
@@ -65,9 +52,9 @@ public class GridRotator : MonoBehaviour
         {
             if (IsPointerOverGrid())
             {
-                _startPosition = Input.mousePosition;
+                Vector2 mousePosition = Input.mousePosition;
                 _isDragging = true;
-                _lastXPosition = _startPosition.x;
+                _lastXPosition = mousePosition.x;
                 _needsSnapping = false;
             }
         }
@@ -112,7 +99,7 @@ public class GridRotator : MonoBehaviour
     
     private bool IsAnyStackMoving()
     {
-        // Chỉ kiểm tra các stack đã được cache
+        // Chỉ kiểm tra các stack đã được cache, tự động bỏ qua null references
         foreach (HexStack stack in _allStacks)
         {
             if (stack != null && LeanTween.isTweening(stack.gameObject))
@@ -120,18 +107,5 @@ public class GridRotator : MonoBehaviour
         }
         
         return false;
-    }
-    
-    // Xóa stack khỏi danh sách khi bị hủy
-    public void UnregisterStack(HexStack stack)
-    {
-        if (_allStacks.Contains(stack))
-            _allStacks.Remove(stack);
-    }
-    
-    private void OnDestroy()
-    {
-        // Hủy đăng ký event nếu có
-        // StackSpawner.OnStackCreated -= RegisterNewStack;
     }
 }

@@ -4,10 +4,6 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
-/// <summary>
-/// Quản lý hệ thống âm thanh của trò chơi 
-/// Thiết kế đơn giản, dễ mở rộng
-/// </summary>
 public class AudioService : MonoBehaviour
 {
     public static AudioService Instance { get; private set; }
@@ -35,7 +31,6 @@ public class AudioService : MonoBehaviour
 
     private void Awake()
     {
-        // Singleton pattern
         if (Instance == null)
         {
             Instance = this;

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
@@ -15,9 +14,6 @@ public class ScoreManager : MonoBehaviour
     private int _currentScore = 0;
     private int _targetScore = 0;
     
-    public static Action<int> OnScoreChanged;
-    public static Action OnLevelCompleted;
-    
     private void Awake()
     {
         if (Instance == null)
@@ -29,14 +25,12 @@ public class ScoreManager : MonoBehaviour
     private void OnEnable()
     {
         MergeManager.OnHexagonsVanished += AddScoreForHexagons;
-        OnLevelCompleted += OnLevelComplete;
         LevelManager.OnLevelLoaded += InitLevel;
     }
     
     private void OnDisable()
     {
         MergeManager.OnHexagonsVanished -= AddScoreForHexagons;
-        OnLevelCompleted -= OnLevelComplete;
         LevelManager.OnLevelLoaded -= InitLevel;
     }
     
@@ -74,10 +68,8 @@ public class ScoreManager : MonoBehaviour
         
         if (_currentScore >= _targetScore)
         {
-            OnLevelCompleted?.Invoke();
+            OnLevelComplete();
         }
-        
-        OnScoreChanged?.Invoke(_currentScore);
     }
     
     /// <summary>
@@ -107,20 +99,12 @@ public class ScoreManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Lấy điểm hiện tại
+    /// Điểm hiện tại
     /// </summary>
-    /// <returns>Điểm hiện tại</returns>
-    public int GetCurrentScore()
-    {
-        return _currentScore;
-    }
+    public int CurrentScore => _currentScore;
     
     /// <summary>
-    /// Lấy điểm mục tiêu
+    /// Điểm mục tiêu
     /// </summary>
-    /// <returns>Điểm mục tiêu</returns>
-    public int GetTargetScore()
-    {
-        return _targetScore;
-    }
+    public int TargetScore => _targetScore;
 }

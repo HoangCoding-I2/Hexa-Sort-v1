@@ -30,13 +30,11 @@ public class ProgressBarUI : MonoBehaviour
     
     private void OnEnable()
     {
-        ScoreManager.OnScoreChanged += UpdateUI;
         LevelManager.OnLevelLoaded += OnLevelLoaded;
     }
     
     private void OnDisable()
     {
-        ScoreManager.OnScoreChanged -= UpdateUI;
         LevelManager.OnLevelLoaded -= OnLevelLoaded;
     }
     
@@ -53,15 +51,18 @@ public class ProgressBarUI : MonoBehaviour
         {
             _progressBarFill.fillAmount = _targetProgress;
         }
+        
+        // Cập nhật UI text luôn khi progress thay đổi
+        UpdateUI();
     }
     
-    private void UpdateUI(int currentScore = 0)
+    private void UpdateUI()
     {
         if (ScoreManager.Instance != null)
         {
             if (_scoreText != null)
             {
-                _scoreText.text = $"{ScoreManager.Instance.GetCurrentScore()} / {ScoreManager.Instance.GetTargetScore()}";
+                _scoreText.text = $"{ScoreManager.Instance.CurrentScore} / {ScoreManager.Instance.TargetScore}";
             }
             
             if (_levelText != null)

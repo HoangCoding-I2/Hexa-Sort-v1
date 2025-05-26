@@ -5,7 +5,11 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
     public static Action<int> OnLevelLoaded;
-    public static Action OnLevelCompleted;
+    [SerializeField] private Transform levelContainer; // Container để đặt level
+    [SerializeField] private GameObject[] levelPrefabs; // Mảng chứa tất cả prefab level
+    
+    private GameObject currentLevel; // Level đang hoạt động hiện tại
+    private int currentLevelIndex = 0; // Chỉ số level hiện tại
 
     private void Awake()
     {
@@ -14,12 +18,6 @@ public class LevelManager : MonoBehaviour
         else
             Destroy(gameObject);
     }
-
-    [SerializeField] private Transform levelContainer; // Container để đặt level
-    [SerializeField] private GameObject[] levelPrefabs; // Mảng chứa tất cả prefab level
-    
-    private GameObject currentLevel; // Level đang hoạt động hiện tại
-    private int currentLevelIndex = 0; // Chỉ số level hiện tại
     
     private void Start()
     {
@@ -36,7 +34,6 @@ public class LevelManager : MonoBehaviour
             Destroy(currentLevel);
         }
             
-        // Tạo level mới từ prefab
         if (levelIndex >= 0 && levelIndex < levelPrefabs.Length)
         {
             currentLevel = Instantiate(levelPrefabs[levelIndex], levelContainer);
@@ -44,21 +41,12 @@ public class LevelManager : MonoBehaviour
             
             // Phát event khi level mới được tải
             OnLevelLoaded?.Invoke(currentLevelIndex);
-            
-            Debug.Log($"Đã tải Level {levelIndex + 1}");
-        }
-        else
-        {
-            Debug.LogWarning("Level không tồn tại!");
         }
     }
     
     // Tải level tiếp theo
     public void LoadNextLevel()
     {
-        // Thông báo level đã hoàn thành
-        OnLevelCompleted?.Invoke();
-        
         LoadLevel(currentLevelIndex + 1);
     }
     
