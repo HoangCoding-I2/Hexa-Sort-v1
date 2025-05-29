@@ -100,12 +100,10 @@ public class StackController : MonoBehaviour
         Physics.Raycast(GetCursorRay(), out hit, 500, _groundLayerMask);
         if (hit.collider == null)
         {
-            Debug.Log("Ground not found");
             return;
         }
         Vector3 targetPosition = hit.point.With(y: 2);
         _currentStack.transform.position = Vector3.MoveTowards(_currentStack.transform.position, targetPosition, Time.deltaTime * 30);
-
         _targetCell = null;
     }
     
@@ -121,6 +119,7 @@ public class StackController : MonoBehaviour
             DragAboveEmptyGridCell(gridCell);
         }
     }
+    
 
     private void DragAboveEmptyGridCell(GridCell gridCell)
     {

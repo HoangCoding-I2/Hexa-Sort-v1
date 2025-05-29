@@ -15,9 +15,9 @@ public class GridGenerator : MonoBehaviour
     {
         transform.Clear();
         float maxDistance = _grid.CellToWorld(new Vector3Int(1, 0, 0)).magnitude * _gridSize;
-        for (int i = -_gridSize; i <= _gridSize; i++)
+        for (int i = -_gridSize; i <= _gridSize; i++)//x
         {
-            for (int j = -_gridSize; j <= _gridSize; j++)
+            for (int j = -_gridSize; j <= _gridSize; j++)//y
             {
                 Vector3 spawnPosition = _grid.CellToWorld(new Vector3Int(i, j, 0));
                 

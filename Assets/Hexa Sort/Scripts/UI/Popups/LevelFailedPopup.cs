@@ -29,7 +29,6 @@ public class LevelFailedPopup : BasePopup
     
     private void OnRedoButtonClicked()
     {
-        // Phát âm thanh button click
         if (AudioService.Instance != null)
             AudioService.Instance.PlayButtonClick();
             
@@ -39,24 +38,22 @@ public class LevelFailedPopup : BasePopup
     
     private void OnHomeButtonClicked()
     {
-        // Phát âm thanh button click
         if (AudioService.Instance != null)
             AudioService.Instance.PlayButtonClick();
             
         Hide();
-        // Chuyển về màn hình chính sử dụng SceneManager
-        SceneManager.LoadScene("MainMenuScreen");
+        
+        // Sử dụng SceneTransition để chuyển scene
+        SceneTransition.ToMainMenu();
     }
+    
     public override void Show()
     {
-        // First call the base Show implementation
         base.Show();
         
-        // Phát âm thanh thất bại
         if (AudioService.Instance != null)
             AudioService.Instance.PlayLevelFail();
         
-        // Animate _redoButton
         if (_redoButton != null)
         {
             _redoButton.transform.localScale = Vector3.zero;
@@ -65,7 +62,6 @@ public class LevelFailedPopup : BasePopup
                 .setDelay(0.2f);
         }
         
-        // Animate _homeButton
         if (_homeButton != null)
         {
             _homeButton.transform.localScale = Vector3.zero;
@@ -74,6 +70,7 @@ public class LevelFailedPopup : BasePopup
                 .setDelay(0.4f);
         }
     }
+    
     private void OnDestroy()
     {
         if (_redoButton != null)

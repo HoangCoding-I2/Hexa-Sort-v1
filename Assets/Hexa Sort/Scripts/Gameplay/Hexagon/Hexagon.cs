@@ -5,6 +5,7 @@ public class Hexagon : MonoBehaviour
     [Header(" Elements ")]
     [SerializeField] private Renderer _renderer;
     [SerializeField] private Collider _collider;
+    [SerializeField] private LeanTweenType _rotationEase;
     public HexStack HexStack { get; private set; }
     
     public Color Color
@@ -41,7 +42,7 @@ public class Hexagon : MonoBehaviour
         Vector3 rotationAxis = Vector3.Cross(Vector3.up, direction);
 
         LeanTween.rotateAround(gameObject, rotationAxis, 180, 0.25f)
-            .setEase(LeanTweenType.easeInOutCubic)
+            .setEase(_rotationEase)
             .setDelay(delay);
     }
 

@@ -5,6 +5,7 @@ public class HexStack : MonoBehaviour
 {
     public List<Hexagon> Hexagons { get; private set; }
     
+
     public void AddHexagon(Hexagon hexagon)
     {
         if (Hexagons == null)

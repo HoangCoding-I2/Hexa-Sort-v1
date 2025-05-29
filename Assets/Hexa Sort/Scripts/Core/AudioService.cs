@@ -66,6 +66,7 @@ public class AudioService : MonoBehaviour
         _musicSource.outputAudioMixerGroup = _musicMixerGroup;
         _musicSource.loop = true;
         
+        
         // Ánh xạ nhạc nền cho từng màn hình
         MapBackgroundMusic();
         
@@ -175,12 +176,6 @@ public class AudioService : MonoBehaviour
     {
         if (sound == null || sound.Clip == null)
             return null;
-            
-        // Cảnh báo nếu cố gắng phát nhạc nền qua PlaySound
-        if (sound.Loop)
-        {
-            Debug.LogWarning($"Âm thanh '{sound.name}' có Loop=true. Hãy sử dụng PlayMusic() thay vì PlaySound() cho nhạc nền!");
-        }
             
         GameObject soundObj = new GameObject($"Sound_{sound.name}");
         

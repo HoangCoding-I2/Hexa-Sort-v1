@@ -29,11 +29,6 @@ public class PopupManager : MonoBehaviour
             _settingsPopup.gameObject.SetActive(false);
     }
     
-    /// <summary>
-    /// Hiển thị popup khi hoàn thành level
-    /// </summary>
-    /// <param name="level">Level hiện tại</param>
-    /// <param name="reward">Điểm thưởng</param>
     public void ShowLevelComplete(int level, int reward)
     {
         if (_levelCompletePopup != null)

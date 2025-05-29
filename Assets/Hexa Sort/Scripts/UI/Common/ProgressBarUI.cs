@@ -28,20 +28,7 @@ public class ProgressBarUI : MonoBehaviour
         }
     }
     
-    private void OnEnable()
-    {
-        LevelManager.OnLevelLoaded += OnLevelLoaded;
-    }
-    
-    private void OnDisable()
-    {
-        LevelManager.OnLevelLoaded -= OnLevelLoaded;
-    }
-    
-    private void OnLevelLoaded(int levelIndex)
-    {
-        UpdateUI();
-    }
+
     
     public void UpdateProgress(float progress)
     {

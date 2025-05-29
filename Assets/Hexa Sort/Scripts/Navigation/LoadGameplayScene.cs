@@ -21,15 +21,10 @@ public class LoadGameplayScene : MonoBehaviour
             originalScale = _playButton.transform.localScale;
             StartPulseAnimation();
         }
-        else
-        {
-            Debug.LogWarning("Play button is not assigned in the Inspector!");
-        }
     }
 
     void OnDestroy()
     {
-        // Hủy tất cả LeanTween liên quan đến button khi component bị hủy
         if (_playButton != null)
         {
             LeanTween.cancel(_playButton.gameObject);
@@ -89,21 +84,17 @@ public class LoadGameplayScene : MonoBehaviour
         // Đánh dấu đang chuyển scene để tránh thêm animation mới
         isTransitioning = true;
         
-        // Hủy tất cả LeanTween đang chạy cho button
         if (_playButton != null)
         {
             LeanTween.cancel(_playButton.gameObject);
         }
         
-        // Phát âm thanh button click
         if (AudioService.Instance != null)
         {
             AudioService.Instance.PlayButtonClick();
         }
         
-        Debug.Log("Loading gameplay scene...");
-        SceneManager.LoadScene("GameplayScreen");
-        
-        // Không cần gọi phát nhạc nền vì AudioService sẽ tự động phát khi scene được load
+        // Sử dụng SceneTransition để chuyển scene
+        SceneTransition.ToGameplay();
     }
 }

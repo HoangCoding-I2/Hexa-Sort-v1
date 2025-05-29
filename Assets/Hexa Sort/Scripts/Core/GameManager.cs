@@ -1,8 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Quản lý toàn bộ luồng game chính
-/// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -20,9 +17,6 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Kiểm tra nếu game over (các ô đều đầy)
-    /// </summary>
     public bool IsGameOver()
     {
         GridCell[] allCells = FindObjectsOfType<GridCell>();
@@ -84,10 +78,6 @@ public class GameManager : MonoBehaviour
             if (PopupManager.Instance != null)
             {
                 PopupManager.Instance.ShowLevelFailed(currentLevel);
-            }
-            else
-            {
-                Debug.LogError("PopupManager.Instance là null khi cố gắng hiển thị LevelFailed popup");
             }
         }
     }

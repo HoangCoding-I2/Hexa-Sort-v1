@@ -5,8 +5,8 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager Instance { get; private set; }
     
     [Header("Settings")]
-    [SerializeField] private int _baseScorePerLevel = 100; // Điểm cơ bản mỗi level
-    [SerializeField] private int _scorePerHexagon = 2; // Điểm mỗi hexagon
+    [SerializeField] private int _baseScorePerLevel = 100;
+    [SerializeField] private int _scorePerHexagon = 2;
     
     [Header("References")]
     [SerializeField] private ProgressBarUI _progressBar;
@@ -34,10 +34,6 @@ public class ScoreManager : MonoBehaviour
         LevelManager.OnLevelLoaded -= InitLevel;
     }
     
-    /// <summary>
-    /// Khởi tạo level với điểm số mục tiêu
-    /// </summary>
-    /// <param name="levelIndex">Chỉ số level</param>
     public void InitLevel(int levelIndex)
     {
         _currentScore = 0;
@@ -45,20 +41,11 @@ public class ScoreManager : MonoBehaviour
         UpdateProgressBar();
     }
     
-    /// <summary>
-    /// Tính toán điểm mục tiêu dựa vào cấp độ
-    /// </summary>
-    /// <param name="levelIndex">Chỉ số level</param>
-    /// <returns>Điểm mục tiêu</returns>
     private int CalculateTargetScore(int levelIndex)
     {
         return _baseScorePerLevel * (levelIndex + 1);
     }
     
-    /// <summary>
-    /// Thêm điểm cho mỗi hexagon đã hợp nhất
-    /// </summary>
-    /// <param name="hexagonCount">Số lượng hexagon</param>
     public void AddScoreForHexagons(int hexagonCount)
     {
         int scoreToAdd = hexagonCount * _scorePerHexagon;
@@ -72,9 +59,6 @@ public class ScoreManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Cập nhật thanh tiến trình
-    /// </summary>
     private void UpdateProgressBar()
     {
         if (_progressBar != null)
@@ -84,9 +68,6 @@ public class ScoreManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Xử lý khi hoàn thành level
-    /// </summary>
     private void OnLevelComplete()
     {
         if (PopupManager.Instance != null)
@@ -98,13 +79,7 @@ public class ScoreManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Điểm hiện tại
-    /// </summary>
     public int CurrentScore => _currentScore;
     
-    /// <summary>
-    /// Điểm mục tiêu
-    /// </summary>
     public int TargetScore => _targetScore;
 }

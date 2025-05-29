@@ -34,14 +34,11 @@ public class LevelCompletePopup : BasePopup
     
     public override void Show()
     {
-        // First call the base Show implementation
         base.Show();
         
-        // Phát âm thanh hoàn thành level
         if (AudioService.Instance != null)
             AudioService.Instance.PlayLevelComplete();
         
-        // Prepare buttons for animation
         if (_nextButton != null)
         {
             _nextButton.transform.localScale = Vector3.zero;
@@ -50,7 +47,6 @@ public class LevelCompletePopup : BasePopup
                 .setDelay(0.2f);
         }
         
-        // Start continuous rotation for Image_color
         if (_imageColor != null)
         {
             _imageColor.transform.rotation = Quaternion.identity;
@@ -62,7 +58,6 @@ public class LevelCompletePopup : BasePopup
     
     public override void Hide()
     {
-        // Stop rotation animation
         if (_rotationTweenId != -1)
         {
             LeanTween.cancel(_rotationTweenId);
@@ -74,7 +69,6 @@ public class LevelCompletePopup : BasePopup
     
     private void OnNextButtonClicked()
     {
-        // Phát âm thanh button click
         if (AudioService.Instance != null)
             AudioService.Instance.PlayButtonClick();
             
@@ -84,7 +78,6 @@ public class LevelCompletePopup : BasePopup
     
     private void OnDestroy()
     {
-        // Stop animation if it's still running
         if (_rotationTweenId != -1)
         {
             LeanTween.cancel(_rotationTweenId);

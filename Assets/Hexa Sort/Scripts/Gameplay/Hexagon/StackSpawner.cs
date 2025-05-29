@@ -25,10 +25,42 @@ public class StackSpawner : MonoBehaviour
     {
         Application.targetFrameRate = 60;
         StackController.OnStackPlaced += StackPlacedCallback;
+        LevelManager.OnLevelLoaded += OnLevelLoadedCallback;
     }
     private void OnDestroy()
     {
         StackController.OnStackPlaced -= StackPlacedCallback;
+        LevelManager.OnLevelLoaded -= OnLevelLoadedCallback;
+    }
+
+    private void OnLevelLoadedCallback(int levelIndex)
+    {
+        _stackCounter = 0;
+        ClearAllStacks();
+        StartCoroutine(GenerateStacksDelayed());
+    }
+
+    private IEnumerator GenerateStacksDelayed()
+    {
+        yield return null;
+        GenerateStacks();
+    }
+
+    private void ClearAllStacks()
+    {
+        for (int i = _stackPositionsParent.childCount - 1; i >= 0; i--)
+        {
+            Transform stackPosition = _stackPositionsParent.GetChild(i);
+            for (int j = stackPosition.childCount - 1; j >= 0; j--)
+            {
+                Transform child = stackPosition.GetChild(j);
+                if (child.GetComponent<HexStack>() != null)
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+
+        }
     }
 
     private void StackPlacedCallback(GridCell gridCell)
@@ -44,7 +76,8 @@ public class StackSpawner : MonoBehaviour
 
     private void Start()
     {
-        GenerateStacks();
+        // Không gọi GenerateStacks() ở đây nữa vì sẽ được gọi từ OnLevelLoaded
+        // GenerateStacks();
     }
     private void GenerateStacks()
     {
@@ -126,4 +159,5 @@ public class StackSpawner : MonoBehaviour
         return new Color[] { firstColor, secondColor };
     }
 }
+
 

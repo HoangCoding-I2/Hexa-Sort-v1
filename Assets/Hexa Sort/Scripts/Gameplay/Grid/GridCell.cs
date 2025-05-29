@@ -18,6 +18,15 @@ public class GridCell : MonoBehaviour
         Stack = stack;
     }
 
+    private void Start()
+    {
+        if(_hexagonColors.Length > 0)
+        {
+            GenerateInitialHexagons();
+        }
+        
+    }
+
     private void GenerateInitialHexagons()
     {
         while(transform.childCount > 1)

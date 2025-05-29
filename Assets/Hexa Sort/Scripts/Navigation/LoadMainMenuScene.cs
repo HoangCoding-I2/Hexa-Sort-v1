@@ -12,24 +12,19 @@ public class LoadMainMenuScene : MonoBehaviour
         {
             _backButton.onClick.AddListener(LoadMainMenu);
         }
-        else
-        {
-            Debug.LogWarning("Back button is not assigned in the Inspector!");
-        }
     }
     
     void LoadMainMenu()
     {
-        // Phát âm thanh button click
         if (AudioService.Instance != null)
         {
             AudioService.Instance.PlayButtonClick();
         }
         
         Debug.Log("Returning to main menu...");
-        SceneManager.LoadScene("MainMenuScreen");
         
-        // Không cần gọi phát nhạc nền vì AudioService sẽ tự động phát khi scene được load
+        // Sử dụng SceneTransition để chuyển scene
+        SceneTransition.ToMainMenu();
     }
     
     private void OnDestroy()

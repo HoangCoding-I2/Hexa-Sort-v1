@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _renderer: {fileID: 3318922974124375409}
   _collider: {fileID: 8682278859807622921}
+  _rotationEase: 16
 --- !u!64 &8682278859807622921
 MeshCollider:
   m_ObjectHideFlags: 0

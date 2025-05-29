@@ -16,7 +16,6 @@ public class SettingsPopup : BasePopup
         if (_okButton != null)
             _okButton.onClick.AddListener(OnCloseButtonClicked);
             
-        // Thiết lập sự kiện khi slider thay đổi
         if (_musicSlider != null)
             _musicSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
             
@@ -29,7 +28,6 @@ public class SettingsPopup : BasePopup
         if (AudioService.Instance == null)
             return;
             
-        // Lấy và hiển thị giá trị âm lượng hiện tại
         if (_musicSlider != null)
             _musicSlider.value = AudioService.Instance.GetMusicVolume();
             
@@ -37,7 +35,6 @@ public class SettingsPopup : BasePopup
             _sfxSlider.value = AudioService.Instance.GetSFXVolume();
     }
     
-    // Các callback khi slider thay đổi
     private void OnMusicVolumeChanged(float volume)
     {
         if (AudioService.Instance != null)
@@ -48,9 +45,6 @@ public class SettingsPopup : BasePopup
     {
         if (AudioService.Instance != null)
             AudioService.Instance.SetSFXVolume(volume);
-            
-        // Không phát âm thanh UI_ButtonClick khi điều chỉnh âm thanh nữa
-        // Vì có thể làm rối loạn người dùng khi có quá nhiều âm thanh
     }
     
     public override void Show()
@@ -61,7 +55,6 @@ public class SettingsPopup : BasePopup
     
     public override void OnCloseButtonClicked()
     {
-        // Phát âm thanh button click
         if (AudioService.Instance != null)
             AudioService.Instance.PlayButtonClick();
             

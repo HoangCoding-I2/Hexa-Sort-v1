@@ -14,10 +14,6 @@ public class SettingsButtonHandler : MonoBehaviour
         {
             settingsButton.onClick.AddListener(OnSettingsButtonClicked);
         }
-        else
-        {
-            Debug.LogWarning("Settings button is not assigned in the Inspector!");
-        }
     }
     
     private void OnSettingsButtonClicked()
@@ -31,10 +27,6 @@ public class SettingsButtonHandler : MonoBehaviour
         if (PopupManager.Instance != null)
         {
             PopupManager.Instance.ShowSettingsPopup();
-        }
-        else
-        {
-            Debug.LogError("PopupManager instance not found!");
         }
     }
     
