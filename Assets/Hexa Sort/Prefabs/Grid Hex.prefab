@@ -70,7 +70,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hexagonPrefab: {fileID: 1473559681549910836, guid: 15b6e5eee209ba84d9ac061efc1c39de,
     type: 3}
+  _cellRenderer: {fileID: 3318922974124375409}
   _hexagonColors: []
+  _normalColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+  _highlightColor: {r: 0.5849056, g: 0.57718045, b: 0.57718045, a: 1}
+  _highlightSpeed: 5
 --- !u!1 &8757718239489137997
 GameObject:
   m_ObjectHideFlags: 0

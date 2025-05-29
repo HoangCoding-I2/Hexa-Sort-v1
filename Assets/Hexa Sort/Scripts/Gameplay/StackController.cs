@@ -12,6 +12,7 @@ public class StackController : MonoBehaviour
 
     [Header(" Data ")]
     private GridCell _targetCell;
+    private GridCell _previousHighlightedCell; // Lưu trữ cell đã highlight trước đó
 
     [Header(" Actions ")]
     public static Action<GridCell> OnStackPlaced;
@@ -68,6 +69,13 @@ public class StackController : MonoBehaviour
 
     private void HandleMouseUp()
     {
+        // Tắt highlight của cell trước đó nếu có
+        if (_previousHighlightedCell != null)
+        {
+            _previousHighlightedCell.SetHighlight(false);
+            _previousHighlightedCell = null;
+        }
+
         if (_targetCell == null)
         {
             _currentStack.transform.position = _currentStackInitialPosition;
@@ -96,6 +104,13 @@ public class StackController : MonoBehaviour
 
     private void DragAboveGround()
     {
+        // Tắt highlight của cell trước đó nếu có
+        if (_previousHighlightedCell != null)
+        {
+            _previousHighlightedCell.SetHighlight(false);
+            _previousHighlightedCell = null;
+        }
+
         RaycastHit hit;
         Physics.Raycast(GetCursorRay(), out hit, 500, _groundLayerMask);
         if (hit.collider == null)
@@ -112,6 +127,7 @@ public class StackController : MonoBehaviour
         GridCell gridCell = hit.collider.GetComponent<GridCell>();
         if (gridCell.IsOccupied)
         {
+            // Nếu grid cell đã bị chiếm, xử lý như khi kéo trên mặt đất
             DragAboveGround();
         }
         else
@@ -120,9 +136,18 @@ public class StackController : MonoBehaviour
         }
     }
     
-
     private void DragAboveEmptyGridCell(GridCell gridCell)
     {
+        // Nếu đang di chuyển đến một cell mới, tắt highlight của cell trước đó
+        if (_previousHighlightedCell != null && _previousHighlightedCell != gridCell)
+        {
+            _previousHighlightedCell.SetHighlight(false);
+        }
+
+        // Bật highlight cho cell hiện tại
+        gridCell.SetHighlight(true);
+        _previousHighlightedCell = gridCell;
+
         Vector3 targetPosition = gridCell.transform.position.With(y: 2);
         _currentStack.transform.position = Vector3.MoveTowards(_currentStack.transform.position, targetPosition, Time.deltaTime * 30);
 
@@ -130,4 +155,13 @@ public class StackController : MonoBehaviour
     }
 
     private Ray GetCursorRay() => Camera.main.ScreenPointToRay(Input.mousePosition);
+    
+    private void OnDestroy()
+    {
+        // Đảm bảo tắt highlight khi hủy component
+        if (_previousHighlightedCell != null)
+        {
+            _previousHighlightedCell.SetHighlight(false);
+        }
+    }
 }
