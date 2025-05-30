@@ -1042,7 +1042,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseScorePerLevel: 100
-  _scorePerHexagon: 20
+  _scorePerHexagon: 4
   _progressBar: {fileID: 1741867399}
 --- !u!1 &746554801
 GameObject:
